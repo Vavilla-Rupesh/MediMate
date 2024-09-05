@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <link rel="icon" href="static/images/medimate.png">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav>
+        <img src="static/images/medimate.png" alt="Medimate Logo">
+        <h1>Medimate</h1>
+        <ul>
+            <li><a href="/welcome">Bot</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="appointment-container">
+        <div class="appointments-card">
+            <h2>Available Doctors</h2>
+            <div class="appointments">
+                {% if doctors %}
+                    {% for doctor in doctors %}
+                    <div class="appointment">
+                        <h3>{{ doctor.name }}</h3>
+                        <p>Specialty: {{ doctor.specialty }}</p>
+                        <p>Contact: {{ doctor.contact }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No doctors available at the moment.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="add-appointment-card">
+            <h2>Book an Appointment</h2>
+            <form action="/appointment" method="POST">
+                <div class="form-group">
+                    <label for="doctor">Doctor's Name:</label>
+                    <input type="text" name="doctor" placeholder="Enter Doctor's Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason for Appointment:</label>
+                    <input type="text" name="reason" placeholder="Enter Reason" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Appointment Date and Time:</label>
+                    <input type="datetime-local" name="date" required>
+                </div>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

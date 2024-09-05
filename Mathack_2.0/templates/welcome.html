@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="static/css/welcome.css">
+    <link rel="icon" href="static/images/medimate.png">
+    <title>Chat</title>
+</head>
+<body>
+    <nav>
+        <img src="static/images/medimate.png" alt="Medimate Logo">
+        <h1>Medimate</h1>
+        <ul>
+            <li><a href="/appointment">Appointment</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <main class="sec">
+        <section>
+            <div class="chating" id="chatContainer">
+                {% for conversation in conversations %}
+                <div class="msg to">
+                    <div class="logo">
+                        <img src="{{ url_for('static', filename='images/medimate.png') }}" alt="Medimate Logo">
+                    </div>
+                    <div class="main-msg">
+                        <p class="text">{{ conversation.user_message }}</p>
+                        {% if conversation.pdf_file %}
+                            <p class="text">PDF: <a href="{{ url_for('static', filename='uploads/' + conversation.pdf_file) }}">{{ conversation.pdf_file }}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="msg from">
+                    <div class="logo">
+                        <img src="{{ url_for('static', filename='images/admin.png') }}" alt="Admin Logo">
+                    </div>
+                    <div class="main-msg">
+                        <p class="text">{{ conversation.bot_message }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Typing animation will appear here -->
+                <div class="msg typing">
+                    <div class="logo">
+                        <img src="{{ url_for('static', filename='images/admin.png') }}" alt="Admin Logo">
+                    </div>
+                </div>
+            </div>
+            <div class="input">
+                <form action="/welcome" method="POST" enctype="multipart/form-data" class="inform" id="chatForm">
+                    <div class="input-space">
+                        <span class="upp material-symbols-rounded input-div">
+                            upload
+                            <input type="file" class="hidden-text file-input" id="file" name="file" accept=".pdf">
+                        </span>
+                        <input type="text" class="message" id="message" name="message" placeholder="Start chat with Uzumaki Naruto" required>
+                        <button class="icon material-symbols-rounded" type="submit">send</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function scrollToBottom() {
+            var chatContainer = document.getElementById('chatContainer');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Scroll to bottom when the page loads
+        window.onload = scrollToBottom;
+
+        // Optional: If using AJAX for new messages, call this function after new messages are added
+        // Example of calling scrollToBottom after a new message is added dynamically
+        // function onNewMessageAdded() {
+        //     scrollToBottom();
+        // }
+    </script>
+    <script src="static/js/welcome.js"></script>
+</body>
+</html>

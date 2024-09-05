@@ -1,0 +1,36 @@
+MathHack   //Db name
+authenticate  //table name
+
+
+create table  authenticate(
+id serial primary key,
+username  text,
+password text
+)
+
+CREATE TABLE conversations (
+    id SERIAL PRIMARY KEY,          
+    user_id INTEGER NOT NULL,       
+    user_message TEXT,   
+    bot_message TEXT,  
+    pdf_file VARCHAR(150)
+);
+
+CREATE TABLE doctors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    specialty VARCHAR(150) NOT NULL,
+    contact VARCHAR(150) NOT NULL
+    email TEXT
+);
+
+
+CREATE TABLE mails (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    CONSTRAINT fk_user
+        FOREIGN KEY(user_id) 
+        REFERENCES authenticate(id)
+);
+
